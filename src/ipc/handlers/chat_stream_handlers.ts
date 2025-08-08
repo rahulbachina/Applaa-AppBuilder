@@ -641,8 +641,11 @@ This conversation includes one or more image attachments. When the user uploads 
             abortSignal: abortController.signal,
           };
 
-          // Only pass generic maxTokens and temperature for providers that expect it
-          if (modelClient.builtinProviderId !== "openai") {
+          // Set temperature/model-specific token options
+          if (modelClient.builtinProviderId === "openai") {
+            // GPT-5 requires default temperature of 1
+            options.temperature = 1;
+          } else {
             options.maxTokens = maxTokensValue;
             options.temperature = 0;
           }
