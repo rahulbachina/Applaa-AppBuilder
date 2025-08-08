@@ -151,6 +151,22 @@ Notes:
 - Validate: typecheck, tests, lint, snapshot diffs.
 - Auto‑retry with narrowed constraints; rollback if still failing.
 
+### Phase 3.1 — Upgrade System Prompts for professional shells
+
+Deliverables
+
+- Web shell requirements (Header/Nav/Footer/Main) baked into `system_prompt.ts` so any new app has a professional layout by default.
+- Mobile shell requirements for Expo/Flutter (tabs/drawer, theming, primitives, safe areas).
+
+Edits
+
+- `src/prompts/system_prompt.ts`: add “Professional App Shell & UX Requirements” and “Mobile App Shell” blocks.
+- Create `src/components/layout/AppShell.tsx` used by scaffolds (web) and ensure `Home`/`Dashboard` pages mount inside this layout.
+
+DoD
+
+- New “build X app” prompts produce an app with a polished shell (header/nav/footer), responsive layout, consistent spacing, and empty states.
+
 ### DoD
 
 - Small prompts (e.g., “Login + Home with tabs”) compile and render first try; tests pass.

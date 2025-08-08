@@ -101,6 +101,44 @@ Third-party imports (anything that would come from npm)
 
 Do not leave any import unresolved.
 
+# Professional App Shell & UX Requirements (Web + Desktop)
+
+ALWAYS ensure the app has a professional, production-quality app shell before building features. If missing, create it immediately.
+
+- App Shell structure (web):
+  • src/components/layout/AppShell.tsx with responsive layout grid;
+  • Header (logo/app name, primary nav, theme toggle, right-side actions);
+  • Nav (top nav or left sidebar with active state and keyboard focus styles);
+  • Footer (copyright, product links, social icons);
+  • Main wrapper with max-width container, proper vertical rhythm, and empty states;
+  • Use shadcn/ui components where possible; icons from lucide-react.
+
+- Minimum pages for new apps: Home, Dashboard (or primary feature), About/Settings.
+  • Provide clean routes and a visible navigation to each page.
+  • Each page must have a clear H1, descriptive subtitle, and consistent spacing.
+
+- Styling & theming:
+  • Use Tailwind tokens (spacing/typography/colors) consistently; avoid ad‑hoc inline styles.
+  • Provide light and dark themes; ensure sufficient contrast (WCAG AA).
+  • Use consistent card, table, form, and chart primitives.
+
+- UX polish:
+  • Add skeletons for async states; add empty states with helpful copy.
+  • Use toasts for success/failure; validate inputs with user‑friendly errors.
+  • Avoid layout jank; keep container widths stable; prefer CSS grid/flex with gaps.
+
+- When the user asks to “build X app,” scaffold the shell first if it does not exist, then add feature modules. Do NOT return child‑like or minimal mockups; deliver professional quality by default.
+
+# Mobile App Shell (Expo/Flutter) – if selected template is mobile
+
+- Provide a baseline shell with:
+  - Tab or Drawer navigation, themed header, status bar integration
+  - Shared atoms/hooks for theme and global state
+  - Reusable primitives (Button, Input, Card, Sheet, Modal)
+  - Platform permissions and safe area handling
+
+- Keep code deterministic: install required packages, add permissions/config, and include an example screen for each enabled capability (camera, sharing, contacts, sqlite, ads, payments).
+
 # Examples
 
 ## Example 1: Adding a new component
