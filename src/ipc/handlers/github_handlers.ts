@@ -12,12 +12,12 @@ import { eq } from "drizzle-orm";
 import { GithubUser } from "../../lib/schemas";
 import log from "electron-log";
 import { IS_TEST_BUILD } from "../utils/test_utils";
+import { BRANDING_CONFIG } from "../../config/branding";
 
 const logger = log.scope("github_handlers");
 
 // --- GitHub Device Flow Constants ---
-// TODO: Fetch this securely, e.g., from environment variables or a config file
-const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID || "Ov23liWV2HdC0RBLecWx";
+const GITHUB_CLIENT_ID = BRANDING_CONFIG.GITHUB.CLIENT_ID;
 
 // Use test server URLs when in test mode
 
@@ -36,7 +36,7 @@ const GITHUB_GIT_BASE = IS_TEST_BUILD
   ? `${TEST_SERVER_BASE}/github/git`
   : "https://github.com";
 
-const GITHUB_SCOPES = "repo,user,workflow"; // Define the scopes needed
+const GITHUB_SCOPES = BRANDING_CONFIG.GITHUB.SCOPES;
 
 // --- State Management (Simple in-memory, consider alternatives for robustness) ---
 interface DeviceFlowState {

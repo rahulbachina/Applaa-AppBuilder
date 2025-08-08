@@ -12,6 +12,7 @@ import {
   MutationCache,
 } from "@tanstack/react-query";
 import { showError } from "./lib/toast";
+import { IpcClient } from "./ipc/ipc_client";
 
 // @ts-ignore
 console.log("Running in mode:", import.meta.env.MODE);
@@ -112,12 +113,35 @@ function App() {
   return <RouterProvider router={router} />;
 }
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <PostHogProvider client={posthogClient}>
-        <App />
-      </PostHogProvider>
-    </QueryClientProvider>
-  </StrictMode>,
-);
+// Wait for electronAPI to be available before rendering the app
+async function initializeApp() {
+  try {
+    await IpcClient.waitForElectronAPI();
+    console.log("electronAPI is ready, initializing app...");
+
+    createRoot(document.getElementById("root")!).render(
+      <StrictMode>
+        <QueryClientProvider client={queryClient}>
+          <PostHogProvider client={posthogClient}>
+            <App />
+          </PostHogProvider>
+        </QueryClientProvider>
+      </StrictMode>,
+    );
+  } catch (error) {
+    console.error("Failed to initialize electronAPI:", error);
+    // Show a basic error message if electronAPI is not available
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    document.getElementById("root")!.innerHTML = `
+      <div style="display: flex; align-items: center; justify-content: center; height: 100vh; font-family: system-ui;">
+        <div style="text-align: center; padding: 20px;">
+          <h2>Failed to initialize application</h2>
+          <p>electronAPI is not available. Please restart the application.</p>
+          <p style="color: #666; font-size: 14px;">${errorMessage}</p>
+        </div>
+      </div>
+    `;
+  }
+}
+
+initializeApp();

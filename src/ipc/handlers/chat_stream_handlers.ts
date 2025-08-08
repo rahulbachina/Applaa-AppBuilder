@@ -55,7 +55,7 @@ import {
   getDyadWriteTags,
   getDyadDeleteTags,
   getDyadRenameTags,
-} from "../utils/dyad_tag_parser";
+} from "../utils/applaa_tag_parser";
 import { fileExists } from "../utils/file_utils";
 import { FileUploadsState } from "../utils/file_uploads_state";
 
@@ -443,7 +443,7 @@ ${componentSnippet}
 
         let systemPrompt = constructSystemPrompt({
           aiRules: await readAiRules(getDyadAppPath(updatedChat.app.path)),
-          chatMode: settings.selectedChatMode,
+          chatMode: settings.selectedChatMode || "build",
         });
         if (
           updatedChat.app?.supabaseProjectId &&

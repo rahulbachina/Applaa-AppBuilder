@@ -9,7 +9,7 @@ import {
   getDyadDeleteTags,
   getDyadRenameTags,
   getDyadWriteTags,
-} from "../utils/dyad_tag_parser";
+} from "../utils/applaa_tag_parser";
 import { getTypeScriptCachePath } from "@/paths/paths";
 
 const logger = log.scope("tsc");

@@ -1,6 +1,7 @@
 import { ContextFilesPicker } from "./ContextFilesPicker";
 import { ModelPicker } from "./ModelPicker";
-import { ProModeSelector } from "./ProModeSelector";
+import { ImportAppIcon } from "./ImportAppIcon";
+// import { ProModeSelector } from "./ProModeSelector"; // Disabled Pro button
 import { ChatModeSelector } from "./ChatModeSelector";
 
 export function ChatInputControls({
@@ -14,7 +15,10 @@ export function ChatInputControls({
       <div className="w-1.5"></div>
       <ModelPicker />
       <div className="w-1.5"></div>
-      <ProModeSelector />
+      <ImportAppIcon />
+      {/* <div className="w-1.5"></div>
+      <ProModeSelector /> */}{" "}
+      {/* Disabled Pro button */}
       <div className="w-1"></div>
       {showContextFilesPicker && (
         <>

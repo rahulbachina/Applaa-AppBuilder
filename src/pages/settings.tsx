@@ -23,6 +23,9 @@ import { AutoFixProblemsSwitch } from "@/components/AutoFixProblemsSwitch";
 import { AutoUpdateSwitch } from "@/components/AutoUpdateSwitch";
 import { ReleaseChannelSelector } from "@/components/ReleaseChannelSelector";
 import { NeonIntegration } from "@/components/NeonIntegration";
+import { MCPMarketplace } from "@/components/settings/MCPMarketplace";
+import { ContextManagement } from "@/components/settings/ContextManagement";
+import { MCPIntegration } from "@/components/settings/MCPIntegration";
 
 export default function SettingsPage() {
   const [isResetDialogOpen, setIsResetDialogOpen] = useState(false);
@@ -115,8 +118,15 @@ export default function SettingsPage() {
               <VercelIntegration />
               <SupabaseIntegration />
               <NeonIntegration />
+              <MCPIntegration />
             </div>
           </div>
+
+          {/* MCP Marketplace Section */}
+          <MCPMarketplace />
+
+          {/* Context Management Section */}
+          <ContextManagement />
 
           {/* Experiments Section */}
           <div

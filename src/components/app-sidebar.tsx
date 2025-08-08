@@ -185,8 +185,10 @@ function AppIcons({
                 >
                   <Link
                     to={item.to}
-                    className={`flex flex-col items-center gap-1 h-14 mb-2 rounded-2xl ${
-                      isActive ? "bg-sidebar-accent" : ""
+                    className={`flex flex-col items-center gap-1 h-14 mb-2 rounded-2xl transition-all duration-200 ${
+                      isActive
+                        ? "bg-gradient-to-br from-[var(--applaa-orange)] to-[var(--applaa-green)] text-white shadow-lg"
+                        : "hover:bg-[var(--applaa-gradient-subtle)] hover:scale-105"
                     }`}
                     onMouseEnter={() => {
                       if (item.title === "Apps") {

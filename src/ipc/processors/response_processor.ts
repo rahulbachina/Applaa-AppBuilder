@@ -23,9 +23,9 @@ import {
   getDyadWriteTags,
   getDyadRenameTags,
   getDyadDeleteTags,
-  getDyadAddDependencyTags,
   getDyadExecuteSqlTags,
-} from "../utils/dyad_tag_parser";
+  getDyadAddDependencyTags,
+} from "../utils/applaa_tag_parser";
 import { storeDbTimestampAtCurrentVersion } from "../utils/neon_timestamp_utils";
 
 import { FileUploadsState } from "../utils/file_uploads_state";
