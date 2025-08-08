@@ -21,4 +21,16 @@ No sign-up required. Just download and go.
 
 **Applaa** is open-source (Apache 2.0 licensed).
 
-If you're interested in contributing to Applaa, please read our [contributing](./CONTRIBUTING.md) doc.
+## 📚 Documentation
+
+For comprehensive documentation, please visit our [docs directory](./docs/README.md).
+
+### Quick Links
+
+- 📖 **[Full Documentation](./docs/README.md)** - Complete documentation index
+- 🔌 **[MCP Setup](./docs/mcp/LOCAL_MCP_SETUP.md)** - Model Context Protocol integration
+- 🐙 **[GitHub Setup](./docs/github/GITHUB_APP_SETUP.md)** - GitHub App configuration
+- 🤝 **[Contributing](./CONTRIBUTING.md)** - How to contribute to the project
+- 🚀 **[Implementation Guide](./docs/implementation/APPLAA_IMPLEMENTATION_STRATEGY.md)** - Development strategy
+
+If you're interested in contributing to Applaa, please read our [contributing guide](./docs/contributing/CONTRIBUTING.md).
