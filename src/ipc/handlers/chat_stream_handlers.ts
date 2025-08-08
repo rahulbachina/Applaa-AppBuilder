@@ -5,6 +5,7 @@ import {
   TextPart,
   ImagePart,
   streamText,
+  generateText,
   ToolSet,
   TextStreamPart,
 } from "ai";
@@ -650,6 +651,22 @@ This conversation includes one or more image attachments. When the user uploads 
             options.temperature = 0;
           }
 
+          // For OpenAI GPT-5, some orgs may not be permitted to stream.
+          // Fall back to non-streaming and wrap as a single-delta stream when necessary.
+          const isOpenAIGpt5 =
+            modelClient.builtinProviderId === "openai" &&
+            (settings.selectedModel?.name || "").startsWith("gpt-5");
+          if (isOpenAIGpt5) {
+            const result = await generateText(options as any);
+            async function* singleDelta(): AsyncIterable<
+              TextStreamPart<ToolSet>
+            > {
+              if (result?.text) {
+                yield { type: "text-delta", textDelta: result.text } as any;
+              }
+            }
+            return { fullStream: singleDelta() as any };
+          }
           return streamText(options);
         };
 
