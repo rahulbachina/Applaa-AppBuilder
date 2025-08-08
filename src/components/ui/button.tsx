@@ -11,6 +11,10 @@ const buttonVariants = cva(
       variant: {
         default:
           "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
+        applaa:
+          "applaa-btn-primary text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200",
+        "applaa-secondary":
+          "applaa-btn-secondary border-2 border-[var(--applaa-orange)] text-[var(--applaa-orange)] hover:bg-[var(--applaa-orange)] hover:text-white shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-200",
         destructive:
           "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:

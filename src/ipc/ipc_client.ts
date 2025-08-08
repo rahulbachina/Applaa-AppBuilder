@@ -101,8 +101,17 @@ export class IpcClient {
   private ipcRenderer: IpcRenderer;
   private chatStreams: Map<number, ChatStreamCallbacks>;
   private appStreams: Map<number, AppStreamCallbacks>;
+  private getIpcRenderer(): IpcRenderer {
+    if (!(window as any).electronAPI?.ipcRenderer) {
+      throw new Error(
+        "electronAPI.ipcRenderer is not available. Make sure the preload script is loaded.",
+      );
+    }
+    return (window as any).electronAPI.ipcRenderer;
+  }
+
   private constructor() {
-    this.ipcRenderer = (window as any).electron.ipcRenderer as IpcRenderer;
+    this.ipcRenderer = this.getIpcRenderer();
     this.chatStreams = new Map();
     this.appStreams = new Map();
     // Set up listeners for stream events
@@ -176,6 +185,33 @@ export class IpcClient {
       } else {
         console.error("[IPC] Invalid error data received:", error);
       }
+    });
+  }
+
+  public static async waitForElectronAPI(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if ((window as any).electronAPI?.ipcRenderer) {
+        resolve();
+        return;
+      }
+
+      let attempts = 0;
+      const maxAttempts = 500; // 5 seconds with 10ms intervals
+
+      const checkInterval = setInterval(() => {
+        attempts++;
+        if ((window as any).electronAPI?.ipcRenderer) {
+          clearInterval(checkInterval);
+          resolve();
+        } else if (attempts >= maxAttempts) {
+          clearInterval(checkInterval);
+          reject(
+            new Error(
+              "electronAPI.ipcRenderer is not available after 5 seconds. Make sure the preload script is loaded.",
+            ),
+          );
+        }
+      }, 10);
     });
   }
 

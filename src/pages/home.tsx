@@ -24,7 +24,7 @@ import {
 import { useTheme } from "@/contexts/ThemeContext";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
-import { ImportAppButton } from "@/components/ImportAppButton";
+
 import { showError } from "@/lib/toast";
 import { invalidateAppQuery } from "@/hooks/useLoadApp";
 import { useQueryClient } from "@tanstack/react-query";
@@ -32,6 +32,11 @@ import { useQueryClient } from "@tanstack/react-query";
 import type { FileAttachment } from "@/ipc/ipc_types";
 import { NEON_TEMPLATE_IDS } from "@/shared/templates";
 import { neonTemplateHook } from "@/client_logic/template_hook";
+
+// Animated Text Component
+function AnimatedText() {
+  return <span className="applaa-gradient-text">Applaa</span>;
+}
 
 // Adding an export for attachments
 export interface HomeSubmitOptions {
@@ -181,23 +186,45 @@ export default function HomePage() {
 
   // Main Home Page Content
   return (
-    <div className="flex flex-col items-center justify-center max-w-3xl m-auto p-8">
+    <div className="flex flex-col items-center justify-center max-w-3xl m-auto p-8 relative">
+      {/* Background gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-[var(--applaa-gradient-subtle)] opacity-50 pointer-events-none rounded-3xl"></div>
+
       <SetupBanner />
 
-      <div className="w-full">
-        <ImportAppButton />
+      {/* Enhanced Hero Section */}
+      <div className="w-full relative z-10">
+        <div className="text-left mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold mb-4 applaa-gradient-text">
+            Build Web/Mobile Apps with <AnimatedText />
+          </h1>
+          <p className="text-lg text-muted-foreground mb-6 max-w-2xl">
+            Transform your ideas into beautiful Web/Mobile applications using
+            the power of AI. Start building with Applaa's intelligent
+            development platform.
+          </p>
+        </div>
+
         <HomeChatInput onSubmit={handleSubmit} />
 
-        <div className="flex flex-col gap-4 mt-4">
+        <div className="flex flex-col gap-6 mt-8">
+          <div className="text-center">
+            <h3 className="text-lg font-semibold text-foreground mb-2">
+              ✨ Get Inspired
+            </h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Try one of these popular app ideas to get started
+            </p>
+          </div>
           <div className="flex flex-wrap gap-4 justify-center">
             {randomPrompts.map((item, index) => (
               <button
                 type="button"
                 key={index}
                 onClick={() => setInputValue(`Build me a ${item.label}`)}
-                className="flex items-center gap-3 px-4 py-2 rounded-xl border border-gray-200
-                           bg-white/50 backdrop-blur-sm
-                           transition-all duration-200
+                className="applaa-card-hover flex items-center gap-3 px-4 py-3 rounded-xl border border-gray-200
+                           bg-white/70 backdrop-blur-sm
+                           transition-all duration-300 hover:scale-105
                            hover:bg-white hover:shadow-md hover:border-gray-300
                            active:scale-[0.98]
                            dark:bg-gray-800/50 dark:border-gray-700

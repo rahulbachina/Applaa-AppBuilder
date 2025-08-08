@@ -130,6 +130,8 @@ declare global {
 let mainWindow: BrowserWindow | null = null;
 
 const createWindow = () => {
+  logger.log("Creating main window...");
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: process.env.NODE_ENV === "development" ? 1280 : 960,
@@ -149,18 +151,51 @@ const createWindow = () => {
     // backgroundColor: "#00000001",
     // frame: false,
   });
+
+  logger.log("Main window created, loading content...");
+
+  // Add event listeners for debugging
+  mainWindow.webContents.on("did-start-loading", () => {
+    logger.log("Window started loading content");
+  });
+
+  mainWindow.webContents.on("did-finish-load", () => {
+    logger.log("Window finished loading content");
+  });
+
+  mainWindow.webContents.on(
+    "did-fail-load",
+    (event, errorCode, errorDescription) => {
+      logger.error("Window failed to load:", errorCode, errorDescription);
+    },
+  );
+
+  mainWindow.on("ready-to-show", () => {
+    logger.log("Window is ready to show");
+  });
+
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
+    logger.log(
+      "Loading from Vite dev server:",
+      MAIN_WINDOW_VITE_DEV_SERVER_URL,
+    );
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
   } else {
-    mainWindow.loadFile(
-      path.join(__dirname, "../renderer/main_window/index.html"),
+    const indexPath = path.join(
+      __dirname,
+      "../renderer/main_window/index.html",
     );
+    logger.log("Loading from file:", indexPath);
+    mainWindow.loadFile(indexPath);
   }
+
   if (process.env.NODE_ENV === "development") {
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools(); // Commented out to prevent auto-opening
   }
+
+  logger.log("Window creation process completed");
 };
 
 const gotTheLock = app.requestSingleInstanceLock();

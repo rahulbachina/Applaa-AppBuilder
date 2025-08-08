@@ -5,6 +5,7 @@ import {
   SupabaseManagementAPIError,
 } from "@dyad-sh/supabase-management-js";
 import log from "electron-log";
+import { BRANDING_CONFIG } from "../config/branding";
 import { IS_TEST_BUILD } from "../ipc/utils/test_utils";
 
 const logger = log.scope("supabase_management_client");
@@ -46,7 +47,7 @@ export async function refreshSupabaseToken(): Promise<void> {
   try {
     // Make request to Supabase refresh endpoint
     const response = await fetch(
-      "https://supabase-oauth.dyad.sh/api/connect-supabase/refresh",
+      `${BRANDING_CONFIG.OAUTH_URLS.SUPABASE}/refresh`,
       {
         method: "POST",
         headers: {

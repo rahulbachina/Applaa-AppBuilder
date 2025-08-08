@@ -1,6 +1,7 @@
 import log from "electron-log";
 
 import { createTestOnlyLoggedHandler } from "./safe_handle";
+import { BRANDING_CONFIG } from "../../config/branding";
 import { handleNeonOAuthReturn } from "../../neon_admin/neon_return_handler";
 import {
   getNeonClient,
@@ -228,7 +229,7 @@ export function registerNeonHandlers() {
     // Simulate the deep link event
     event.sender.send("deep-link-received", {
       type: "neon-oauth-return",
-      url: "https://oauth.dyad.sh/api/integrations/neon/login",
+      url: `${BRANDING_CONFIG.OAUTH_URLS.NEON}/login`,
     });
     logger.info("Sent fake neon deep-link-received event during testing.");
   });

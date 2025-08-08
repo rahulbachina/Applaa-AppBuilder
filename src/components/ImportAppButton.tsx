@@ -10,11 +10,12 @@ export function ImportAppButton() {
     <>
       <div className="px-4 pb-1 flex justify-center">
         <Button
-          variant="default"
-          size="default"
+          variant="applaa"
+          size="lg"
           onClick={() => setIsDialogOpen(true)}
+          className="font-semibold"
         >
-          <Upload className="mr-2 h-4 w-4" />
+          <Upload className="mr-2 h-5 w-5" />
           Import App
         </Button>
       </div>

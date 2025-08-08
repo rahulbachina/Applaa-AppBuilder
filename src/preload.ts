@@ -130,7 +130,7 @@ type ValidReceiveChannel = (typeof validReceiveChannels)[number];
 
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
-contextBridge.exposeInMainWorld("electron", {
+contextBridge.exposeInMainWorld("electronAPI", {
   ipcRenderer: {
     invoke: (channel: ValidInvokeChannel, ...args: unknown[]) => {
       if (validInvokeChannels.includes(channel)) {

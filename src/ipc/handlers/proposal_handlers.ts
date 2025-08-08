@@ -18,7 +18,7 @@ import {
   getDyadAddDependencyTags,
   getDyadChatSummaryTag,
   getDyadCommandTags,
-} from "../utils/dyad_tag_parser";
+} from "../utils/applaa_tag_parser";
 import log from "electron-log";
 import { isServerFunction } from "../../supabase_admin/supabase_utils";
 import {

@@ -8,7 +8,7 @@ import { DyadAddDependency } from "./DyadAddDependency";
 import { DyadExecuteSql } from "./DyadExecuteSql";
 import { DyadAddIntegration } from "./DyadAddIntegration";
 import { DyadEdit } from "./DyadEdit";
-import { DyadCodebaseContext } from "./DyadCodebaseContext";
+import { ApplaaCodebaseContext } from "./ApplaaCodebaseContext";
 import { DyadThink } from "./DyadThink";
 import { CodeHighlight } from "./CodeHighlight";
 import { useAtomValue } from "jotai";
@@ -385,7 +385,7 @@ function renderCustomTag(
 
     case "dyad-codebase-context":
       return (
-        <DyadCodebaseContext
+        <ApplaaCodebaseContext
           node={{
             properties: {
               files: attributes.files || "",
@@ -394,7 +394,7 @@ function renderCustomTag(
           }}
         >
           {content}
-        </DyadCodebaseContext>
+        </ApplaaCodebaseContext>
       );
 
     case "dyad-output":

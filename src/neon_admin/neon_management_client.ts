@@ -2,6 +2,7 @@ import { withLock } from "../ipc/utils/lock_utils";
 import { readSettings, writeSettings } from "../main/settings";
 import { Api, createApiClient } from "@neondatabase/api-client";
 import log from "electron-log";
+import { BRANDING_CONFIG } from "../config/branding";
 import { IS_TEST_BUILD } from "../ipc/utils/test_utils";
 
 const logger = log.scope("neon_management_client");
@@ -41,7 +42,7 @@ export async function refreshNeonToken(): Promise<void> {
   try {
     // Make request to Neon refresh endpoint
     const response = await fetch(
-      "https://oauth.dyad.sh/api/integrations/neon/refresh",
+      `${BRANDING_CONFIG.OAUTH_URLS.NEON}/refresh`,
 
       {
         method: "POST",

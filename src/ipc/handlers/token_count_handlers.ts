@@ -56,7 +56,7 @@ export function registerTokenCountHandlers() {
       // Count system prompt tokens
       let systemPrompt = constructSystemPrompt({
         aiRules: await readAiRules(getDyadAppPath(chat.app.path)),
-        chatMode: settings.selectedChatMode,
+        chatMode: settings.selectedChatMode || "build",
       });
       let supabaseContext = "";
 

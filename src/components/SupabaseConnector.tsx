@@ -36,6 +36,7 @@ import connectSupabaseLight from "../../assets/supabase/connect-supabase-light.s
 
 import { ExternalLink } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
+import { BRANDING_CONFIG } from "@/config/branding";
 
 export function SupabaseConnector({ appId }: { appId: number }) {
   const { settings, refreshSettings } = useSettings();
@@ -210,7 +211,7 @@ export function SupabaseConnector({ appId }: { appId: number }) {
               });
             } else {
               await IpcClient.getInstance().openExternalUrl(
-                "https://supabase-oauth.dyad.sh/api/connect-supabase/login",
+                `${BRANDING_CONFIG.OAUTH_URLS.SUPABASE}/login`,
               );
             }
           }}

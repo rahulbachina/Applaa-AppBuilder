@@ -8,6 +8,7 @@ import { useDeepLink } from "@/contexts/DeepLinkContext";
 import { ExternalLink } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { NeonDisconnectButton } from "@/components/NeonDisconnectButton";
+import { BRANDING_CONFIG } from "@/config/branding";
 
 export function NeonConnector() {
   const { settings, refreshSettings } = useSettings();
@@ -69,7 +70,7 @@ export function NeonConnector() {
               await IpcClient.getInstance().fakeHandleNeonConnect();
             } else {
               await IpcClient.getInstance().openExternalUrl(
-                "https://oauth.dyad.sh/api/integrations/neon/login",
+                `${BRANDING_CONFIG.OAUTH_URLS.NEON}/login`,
               );
             }
           }}

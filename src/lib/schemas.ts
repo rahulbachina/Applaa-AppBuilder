@@ -165,6 +165,9 @@ export const UserSettingsSchema = z.object({
   selectedChatMode: ChatModeSchema.optional(),
   acceptedCommunityCode: z.boolean().optional(),
 
+  // MCP (Model Context Protocol) Settings
+  enableMCP: z.boolean().optional(),
+
   enableAutoFixProblems: z.boolean().optional(),
   enableNativeGit: z.boolean().optional(),
   enableAutoUpdate: z.boolean(),

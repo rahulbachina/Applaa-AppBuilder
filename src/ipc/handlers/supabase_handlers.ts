@@ -1,5 +1,6 @@
 import log from "electron-log";
 import { db } from "../../db";
+import { BRANDING_CONFIG } from "../../config/branding";
 import { eq } from "drizzle-orm";
 import { apps } from "../../db/schema";
 import { getSupabaseClient } from "../../supabase_admin/supabase_management_client";
@@ -73,7 +74,7 @@ export function registerSupabaseHandlers() {
       // Simulate the deep link event
       safeSend(event.sender, "deep-link-received", {
         type: "supabase-oauth-return",
-        url: "https://supabase-oauth.dyad.sh/api/connect-supabase/login",
+        url: `${BRANDING_CONFIG.OAUTH_URLS.SUPABASE}/login`,
       });
       logger.info(
         `Sent fake deep-link-received event for app ${appId} during testing.`,
