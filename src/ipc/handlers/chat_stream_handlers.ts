@@ -615,7 +615,9 @@ This conversation includes one or more image attachments. When the user uploads 
           }
 
           const options: any = {
-            temperature: 0,
+            ...(modelClient.builtinProviderId !== "openai"
+              ? { temperature: 0 }
+              : {}),
             maxRetries: 2,
             model: modelClient.model,
             providerOptions: baseProviderOptions,
