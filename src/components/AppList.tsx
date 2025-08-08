@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { selectedChatIdAtom } from "@/atoms/chatAtoms";
 import { useLoadApps } from "@/hooks/useLoadApps";
+import { IpcClient } from "@/ipc/ipc_client";
 
 export function AppList({ show }: { show?: boolean }) {
   const navigate = useNavigate();
@@ -24,13 +25,25 @@ export function AppList({ show }: { show?: boolean }) {
     return null;
   }
 
-  const handleAppClick = (id: number) => {
+  const handleAppClick = async (id: number) => {
     setSelectedAppId(id);
-    setSelectedChatId(null);
-    navigate({
-      to: "/",
-      search: { appId: id },
-    });
+    try {
+      // Load chats for this app
+      const chats = await IpcClient.getInstance().getChats(id);
+      let chatId: number;
+      if (chats && chats.length > 0) {
+        chatId = chats[0].id;
+      } else {
+        // If no chat exists, create one
+        chatId = await IpcClient.getInstance().createChat(id);
+      }
+      setSelectedChatId(chatId);
+      navigate({ to: "/chat", search: { id: chatId } });
+    } catch {
+      // Fallback: go to app details if something goes wrong
+      setSelectedChatId(null);
+      navigate({ to: "/", search: { appId: id } });
+    }
   };
 
   const handleNewApp = () => {
