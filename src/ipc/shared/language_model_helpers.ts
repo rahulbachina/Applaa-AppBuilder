@@ -22,6 +22,22 @@ export interface ModelOption {
 
 export const MODEL_OPTIONS: Record<string, ModelOption[]> = {
   openai: [
+    // https://platform.openai.com/docs/models/gpt-5
+    {
+      name: "gpt-5",
+      displayName: "GPT 5",
+      description: "OpenAI's latest flagship model",
+      maxOutputTokens: 32_768,
+      contextWindow: 1_000_000,
+    },
+    // Optional smaller variant
+    {
+      name: "gpt-5-mini",
+      displayName: "GPT 5 Mini",
+      description: "Smaller, fast & cost‑effective",
+      maxOutputTokens: 32_768,
+      contextWindow: 1_000_000,
+    },
     // https://platform.openai.com/docs/models/gpt-4.1
     {
       name: "gpt-4.1",

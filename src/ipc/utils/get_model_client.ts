@@ -19,6 +19,10 @@ const dyadGatewayUrl = process.env.DYAD_GATEWAY_URL;
 
 const AUTO_MODELS = [
   {
+    provider: "openai",
+    name: "gpt-5",
+  },
+  {
     provider: "google",
     name: "gemini-2.5-flash",
   },
