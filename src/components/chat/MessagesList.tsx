@@ -146,12 +146,13 @@ export const MessagesList = forwardRef<HTMLDivElement, MessagesListProps>(
                   setIsRetryLoading(true);
                   try {
                     // The last message is usually an assistant, but it might not be.
-                    const lastVersion = versions[0];
+                    const lastVersion = versions?.[0];
                     const lastMessage = messages[messages.length - 1];
                     let shouldRedo = true;
                     if (
-                      lastVersion.oid === lastMessage.commitHash &&
-                      lastMessage.role === "assistant"
+                      lastVersion &&
+                      lastMessage?.role === "assistant" &&
+                      lastVersion.oid === lastMessage.commitHash
                     ) {
                       const previousAssistantMessage =
                         messages[messages.length - 3];
@@ -204,7 +205,11 @@ export const MessagesList = forwardRef<HTMLDivElement, MessagesListProps>(
                     });
                   } catch (error) {
                     console.error("Error during retry operation:", error);
-                    showError("Failed to retry message");
+                    showError(
+                      error instanceof Error
+                        ? error
+                        : new Error("Failed to retry message"),
+                    );
                   } finally {
                     setIsRetryLoading(false);
                   }
