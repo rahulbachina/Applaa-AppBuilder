@@ -615,9 +615,6 @@ This conversation includes one or more image attachments. When the user uploads 
           }
 
           const options: any = {
-            ...(modelClient.builtinProviderId !== "openai"
-              ? { temperature: 0 }
-              : {}),
             maxRetries: 2,
             model: modelClient.model,
             providerOptions: baseProviderOptions,
@@ -644,9 +641,10 @@ This conversation includes one or more image attachments. When the user uploads 
             abortSignal: abortController.signal,
           };
 
-          // Only pass generic maxTokens for providers that expect it
+          // Only pass generic maxTokens and temperature for providers that expect it
           if (modelClient.builtinProviderId !== "openai") {
             options.maxTokens = maxTokensValue;
+            options.temperature = 0;
           }
 
           return streamText(options);
