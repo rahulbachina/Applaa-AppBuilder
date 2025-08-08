@@ -591,25 +591,34 @@ This conversation includes one or more image attachments. When the user uploads 
           } else {
             logger.log("sending AI request");
           }
-          return streamText({
-            maxTokens: await getMaxTokens(settings.selectedModel),
+          const maxTokensValue = await getMaxTokens(settings.selectedModel);
+          const baseProviderOptions = {
+            "dyad-engine": {
+              dyadRequestId,
+            },
+            "dyad-gateway": getExtraProviderOptions(
+              modelClient.builtinProviderId,
+              settings,
+            ),
+            google: {
+              thinkingConfig: {
+                includeThoughts: true,
+              },
+            } satisfies GoogleGenerativeAIProviderOptions,
+          } as Record<string, any>;
+
+          // For OpenAI GPT-5 family, use max_completion_tokens instead of max_tokens
+          if (modelClient.builtinProviderId === "openai") {
+            baseProviderOptions["openai"] = {
+              max_completion_tokens: maxTokensValue,
+            };
+          }
+
+          const options: any = {
             temperature: 0,
             maxRetries: 2,
             model: modelClient.model,
-            providerOptions: {
-              "dyad-engine": {
-                dyadRequestId,
-              },
-              "dyad-gateway": getExtraProviderOptions(
-                modelClient.builtinProviderId,
-                settings,
-              ),
-              google: {
-                thinkingConfig: {
-                  includeThoughts: true,
-                },
-              } satisfies GoogleGenerativeAIProviderOptions,
-            },
+            providerOptions: baseProviderOptions,
             system: systemPrompt,
             messages: chatMessages.filter((m) => m.content),
             onError: (error: any) => {
@@ -631,7 +640,14 @@ This conversation includes one or more image attachments. When the user uploads 
               activeStreams.delete(req.chatId);
             },
             abortSignal: abortController.signal,
-          });
+          };
+
+          // Only pass generic maxTokens for providers that expect it
+          if (modelClient.builtinProviderId !== "openai") {
+            options.maxTokens = maxTokensValue;
+          }
+
+          return streamText(options);
         };
 
         const processResponseChunkUpdate = async ({
