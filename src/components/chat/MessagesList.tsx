@@ -30,7 +30,7 @@ export const MessagesList = forwardRef<HTMLDivElement, MessagesListProps>(
     const { versions, revertVersion } = useVersions(appId);
     const { streamMessage, isStreaming } = useStreamChat();
     const { isAnyProviderSetup } = useLanguageModelProviders();
-    const { settings } = useSettings();
+    const { settings: _settings } = useSettings();
     const setMessages = useSetAtom(chatMessagesAtom);
     const [isUndoLoading, setIsUndoLoading] = useState(false);
     const [isRetryLoading, setIsRetryLoading] = useState(false);
@@ -227,7 +227,7 @@ export const MessagesList = forwardRef<HTMLDivElement, MessagesListProps>(
         )}
 
         {isStreaming &&
-          !settings?.enableDyadPro &&
+          !_settings?.enableDyadPro &&
           !userBudget &&
           messages.length > 0 && (
             <PromoMessage
