@@ -1,4 +1,4 @@
-import { Home, Inbox, Settings, HelpCircle, Store } from "lucide-react";
+import { Home, Settings, HelpCircle, Store } from "lucide-react";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useSidebar } from "@/components/ui/sidebar"; // import useSidebar hook
 import { useEffect, useState, useRef } from "react";
@@ -30,11 +30,6 @@ const items = [
     icon: Home,
   },
   {
-    title: "Chat",
-    to: "/chat",
-    icon: Inbox,
-  },
-  {
     title: "Settings",
     to: "/settings",
     icon: Settings,
@@ -49,7 +44,6 @@ const items = [
 // Hover state types
 type HoverState =
   | "start-hover:app"
-  | "start-hover:chat"
   | "start-hover:settings"
   | "clear-hover"
   | "no-hover";
@@ -82,21 +76,16 @@ export function AppSidebar() {
   const isAppRoute =
     routerState.location.pathname === "/" ||
     routerState.location.pathname.startsWith("/app-details");
-  const isChatRoute = routerState.location.pathname === "/chat";
   const isSettingsRoute = routerState.location.pathname.startsWith("/settings");
 
   let selectedItem: string | null = null;
   if (hoverState === "start-hover:app") {
     selectedItem = "Apps";
-  } else if (hoverState === "start-hover:chat") {
-    selectedItem = "Chat";
   } else if (hoverState === "start-hover:settings") {
     selectedItem = "Settings";
   } else if (state === "expanded") {
     if (isAppRoute) {
       selectedItem = "Apps";
-    } else if (isChatRoute) {
-      selectedItem = "Chat";
     } else if (isSettingsRoute) {
       selectedItem = "Settings";
     }
@@ -125,7 +114,7 @@ export function AppSidebar() {
           {/* Right Column: Chat List Section */}
           <div className="w-[240px]">
             <AppList show={selectedItem === "Apps"} />
-            <ChatList show={selectedItem === "Chat"} />
+            <ChatList show={false} />
             <SettingsList show={selectedItem === "Settings"} />
           </div>
         </div>
@@ -193,8 +182,6 @@ function AppIcons({
                     onMouseEnter={() => {
                       if (item.title === "Apps") {
                         onHoverChange("start-hover:app");
-                      } else if (item.title === "Chat") {
-                        onHoverChange("start-hover:chat");
                       } else if (item.title === "Settings") {
                         onHoverChange("start-hover:settings");
                       }
